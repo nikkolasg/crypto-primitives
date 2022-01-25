@@ -159,7 +159,8 @@ impl<F: PrimeField, CF: PrimeField> AllocVar<Vec<F>, CF> for BooleanInputVar<F, 
 
             // convert the elements into booleans (little-endian)
             let mut res = Vec::<Vec<Boolean<CF>>>::new();
-            for elem in obj.iter() {
+            for (_i, elem) in obj.iter().enumerate() {
+                //println!("CONSTRAINTS: input {} -> {:?}", i, elem);
                 let mut bits = elem.into_repr().to_bits_le();
                 bits.truncate(F::size_in_bits());
 
@@ -189,7 +190,8 @@ impl<F: PrimeField, CF: PrimeField> AllocVar<Vec<F>, CF> for BooleanInputVar<F, 
 
         // Step 1: obtain the bits of the F field elements (little-endian)
         let mut src_bits = Vec::<bool>::new();
-        for elem in obj.borrow().iter() {
+        for (_i, elem) in obj.borrow().iter().enumerate() {
+            //println!("CONSTRAINTS: input {} -> {:?}", i, elem);
             let mut bits = elem.into_repr().to_bits_le();
             bits.truncate(F::size_in_bits());
             for _ in bits.len()..F::size_in_bits() {
